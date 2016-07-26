@@ -25,11 +25,7 @@ api.markPublic = function() {
   expect(checkbox.isSelected()).to.eventually.be.false;
   checkbox.click();
   editModal.element(by.partialButtonText('Save')).click();
-  browser.wait(function() {
-    return editModal.isPresent().then(function(res) {
-      return !res;
-    });
-  }, 8000);
+  browser.wait(EC.stalenessOf(editModal), 8000);
 };
 
 api.markPrivate = function() {
@@ -44,11 +40,7 @@ api.markPrivate = function() {
   expect(checkbox.isSelected()).to.eventually.be.true;
   checkbox.click();
   editModal.element(by.partialButtonText('Save')).click();
-  browser.wait(function() {
-    return editModal.isPresent().then(function(res) {
-      return !res;
-    });
-  }, 8000);
+  browser.wait(EC.stalenessOf(editModal), 8000);
 };
 
 api.name = function() {
