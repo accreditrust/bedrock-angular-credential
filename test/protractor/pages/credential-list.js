@@ -16,12 +16,7 @@ var protractor = global.protractor;
 api.COMPONENT_TAG = 'br-credentials';
 
 api.credentials = function() {
-  var component = element(by.tagName(api.COMPONENT_TAG));
-  bedrock.waitForElementToShow(component);
-
-  var credentials =
-    element.all(by.repeater('credential in model.credentials'));
-  return credentials;
+  return element.all(by.repeater('credential in model.credentials'));
 };
 
 api.clickCredential = function(credential) {
