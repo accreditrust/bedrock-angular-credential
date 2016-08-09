@@ -13,15 +13,25 @@ var element = global.element;
 var should = global.should;
 var expect = global.expect;
 var protractor = global.protractor;
-
 var EC = protractor.ExpectedConditions;
 
 api.COMPONENT_TAG = 'br-credential-viewer';
+api.component = element(by.tagName(api.COMPONENT_TAG));
+
+api.actionMenuButton = function() {
+  return api.component.element(by.attribute('stackable-trigger', '$ctrl.menu'));
+};
+
+api.actionMenu = function() {
+  var actionMenu = element(by.tagName('br-credential-viewer-action-menu'));
+  browser.wait(EC.visibilityOf(actionMenu), 3000);
+  return actionMenu;
+};
 
 api.markPublic = function() {
-  var component = element(by.tagName(api.COMPONENT_TAG));
-  bedrock.waitForElementToShow(component);
-  component.element(by.attribute('stackable-trigger', '$ctrl.menu')).click();
+  bedrock.waitForElementToShow(api.component);
+  api.component.element(by.attribute('stackable-trigger', '$ctrl.menu'))
+    .click();
   var actionMenu = element(by.tagName('br-credential-viewer-action-menu'));
   actionMenu.element(by.partialLinkText('Edit')).click();
   bedrock.waitForModalTransition();
@@ -38,9 +48,9 @@ api.markPublic = function() {
 };
 
 api.markPrivate = function() {
-  var component = element(by.tagName(api.COMPONENT_TAG));
-  bedrock.waitForElementToShow(component);
-  component.element(by.attribute('stackable-trigger', '$ctrl.menu')).click();
+  bedrock.waitForElementToShow(api.component);
+  api.component.element(by.attribute('stackable-trigger', '$ctrl.menu'))
+    .click();
   var actionMenu = element(by.tagName('br-credential-viewer-action-menu'));
   actionMenu.element(by.partialLinkText('Edit')).click();
   bedrock.waitForModalTransition();
@@ -57,7 +67,7 @@ api.markPrivate = function() {
 };
 
 api.name = function() {
-  var component = element(by.tagName(api.COMPONENT_TAG));
-  bedrock.waitForElementToShow(component);
-  return component.element(by.attribute('ng-bind', '$ctrl.credential.name'));
+  bedrock.waitForElementToShow(api.component);
+  return api.component.element(
+    by.attribute('ng-bind', '$ctrl.credential.name'));
 };
