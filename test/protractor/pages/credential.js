@@ -27,10 +27,14 @@ api.markPublic = function() {
   bedrock.waitForModalTransition();
   var editModal = element(by.tagName('br-edit-credential-modal'));
   var checkbox = editModal.element(by.model('model.allPublic'));
-  expect(checkbox.isSelected()).to.eventually.be.false;
-  checkbox.click();
+  checkbox.isSelected().then(function(selected) {
+    // check the box if it's not selected
+    if(!selected) {
+      checkbox.click();
+    }
+  });
   editModal.element(by.partialButtonText('Save')).click();
-  browser.wait(EC.stalenessOf(editModal), 8000);
+  browser.wait(EC.stalenessOf(editModal), 3000);
 };
 
 api.markPrivate = function() {
@@ -42,10 +46,14 @@ api.markPrivate = function() {
   bedrock.waitForModalTransition();
   var editModal = element(by.tagName('br-edit-credential-modal'));
   var checkbox = editModal.element(by.model('model.allPublic'));
-  expect(checkbox.isSelected()).to.eventually.be.true;
-  checkbox.click();
+  checkbox.isSelected().then(function(selected) {
+    // uncheck the box if it's selected
+    if(selected) {
+      checkbox.click();
+    }
+  });
   editModal.element(by.partialButtonText('Save')).click();
-  browser.wait(EC.stalenessOf(editModal), 8000);
+  browser.wait(EC.stalenessOf(editModal), 3000);
 };
 
 api.name = function() {
