@@ -1,3 +1,8 @@
+/*!
+ * Copyright (c) 2016 Digital Bazaar, Inc. All rights reserved.
+ */
+/* jshint -W030 */
+
 var bedrock = global.bedrock;
 
 var api = {};
@@ -48,4 +53,3 @@ api.name = function() {
   bedrock.waitForElementToShow(component);
   return component.element(by.attribute('ng-bind', '$ctrl.credential.name'));
 };
-
